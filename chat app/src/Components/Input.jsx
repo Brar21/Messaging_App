@@ -1,5 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { createRef, useContext, useEffect, useState } from "react";
 import Picker from 'emoji-picker-react';
+import PropTypes from 'prop-types'
 import { AuthContext } from "../Context/AuthContext";
 import { ChatContext } from "../Context/ChatContext";
 import {
@@ -13,18 +14,41 @@ import { db, storage } from "../Firebase";
 import { v4 as uuid } from "uuid";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import '../App.css';
-const Input = () => {
+
+const Input = ({remoteAvatar}) => {
     const [text, setText] = useState("");
     const [img, setImg] = useState(null);
     const [inputStr, setInputStr] = useState('');
-    const [showPicker, setShowPicker] = useState(false);
-
-    const onEmojiClick = (event, emojiObject) => {
-        setInputStr(prevInput => prevInput + emojiObject.emoji);
-        setShowPicker(false);
-    };
+    const [emoji, setEmoji] = useState();
+    const [message, setMessage] = useState('');
+    const [cursorPoint, setCursorPoint] = useState();
+    const inputRef = createRef;
     const { currentUser } = useContext(AuthContext);
     const { data } = useContext(ChatContext);
+    const SelectEmoji = (e, { emoji }) => {
+        const ref = inputRef.current;
+        ref.focus();
+        const start = message.substring(0, ref.selectionStart);
+        const end = message.substring(0, ref.selectionStart);
+        const text = start + emoji + end;
+        setMessage(text)
+        setCursorPoint(start.length + emoji.length);
+
+    };
+    const handleChange = e => {
+        setMessage(e.target.value);
+}
+    const handleEmoji = () => {
+        inputRef.current.focus();
+        setEmoji(!emoji)
+    }
+    // const onEmojiClick = (event, emojiObject) => {
+    //     setInputStr(prevInput => prevInput + emojiObject.emoji);
+    //     setShowPicker(false);
+    // };
+    useEffect(() => {
+        inputRef.current.selectionEnd = cursorPoint;
+    }, [cursorPoint]);
 
     const handleSend = async () => {
         if (img) {
@@ -88,9 +112,8 @@ const Input = () => {
             />
             <div className="send">
                 {/* <img src="https://www.freeiconspng.com/thumbs/add-icon-png/add-1-icon--office-iconset--custom-icon-design-14.png" style={{ width: "24px", height: "24px" }} alt="addFile_logo" /> */}
-                <div className="picker-container">
+                {/* <div className="picker-container">
                     <input
-                        type="text"
                         id="Text"
                         className="input-style"
                         value={inputStr}
@@ -105,7 +128,7 @@ const Input = () => {
                     {showPicker && <Picker
                         pickerStyle={{ width: '100%' }}
                         onEmojiClick={onEmojiClick} />}
-                </div>
+                </div> */}
                 <div>
                 <input
                     type="file"
