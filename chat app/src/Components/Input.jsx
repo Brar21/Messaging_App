@@ -1,6 +1,5 @@
-import React, { createRef, useContext, useEffect, useState } from "react";
-import Picker from 'emoji-picker-react';
-import PropTypes from 'prop-types'
+import React, {  useContext, useState } from "react";
+import Emojis from "./Emoji";
 import { AuthContext } from "../Context/AuthContext";
 import { ChatContext } from "../Context/ChatContext";
 import {
@@ -15,40 +14,14 @@ import { v4 as uuid } from "uuid";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import '../App.css';
 
-const Input = ({remoteAvatar}) => {
+const Input = () => {
     const [text, setText] = useState("");
     const [img, setImg] = useState(null);
-    const [inputStr, setInputStr] = useState('');
-    const [emoji, setEmoji] = useState();
-    const [message, setMessage] = useState('');
-    const [cursorPoint, setCursorPoint] = useState();
-    const inputRef = createRef;
+
     const { currentUser } = useContext(AuthContext);
     const { data } = useContext(ChatContext);
-    const SelectEmoji = (e, { emoji }) => {
-        const ref = inputRef.current;
-        ref.focus();
-        const start = message.substring(0, ref.selectionStart);
-        const end = message.substring(0, ref.selectionStart);
-        const text = start + emoji + end;
-        setMessage(text)
-        setCursorPoint(start.length + emoji.length);
-
-    };
-    const handleChange = e => {
-        setMessage(e.target.value);
-}
-    const handleEmoji = () => {
-        inputRef.current.focus();
-        setEmoji(!emoji)
-    }
-    // const onEmojiClick = (event, emojiObject) => {
-    //     setInputStr(prevInput => prevInput + emojiObject.emoji);
-    //     setShowPicker(false);
-    // };
-    useEffect(() => {
-        inputRef.current.selectionEnd = cursorPoint;
-    }, [cursorPoint]);
+ 
+ 
 
     const handleSend = async () => {
         if (img) {
@@ -112,23 +85,9 @@ const Input = ({remoteAvatar}) => {
             />
             <div className="send">
                 {/* <img src="https://www.freeiconspng.com/thumbs/add-icon-png/add-1-icon--office-iconset--custom-icon-design-14.png" style={{ width: "24px", height: "24px" }} alt="addFile_logo" /> */}
-                {/* <div className="picker-container">
-                    <input
-                        id="Text"
-                        className="input-style"
-                        value={inputStr}
-                        onChange={e => setInputStr(e.target.value)} />
-                    <label htmlFor="Text">
-                        <img
-                            className="emoji-icon"
-                            src="https://icons.getbootstrap.com/assets/icons/emoji-smile.svg" alt="emoji"
-                            onClick={() => setShowPicker(val => !val)} />
-                    </label>
-                  
-                    {showPicker && <Picker
-                        pickerStyle={{ width: '100%' }}
-                        onEmojiClick={onEmojiClick} />}
-                </div> */}
+                <div className="picker-container">
+                   <Emojis/>
+                </div>
                 <div>
                 <input
                     type="file"

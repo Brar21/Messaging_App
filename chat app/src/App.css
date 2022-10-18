@@ -36,22 +36,18 @@
     transform: rotate(360deg);
   }
 }
-.picker-container {
-  position: relative;
-  width: 300px;
+.picker-container{
+  width: 80%;
+  height: 40px;
+  padding: 1rem;
+}
+.icon {
+  height: 35px;
+  width: 35px;
 }
 
-.emoji-icon {
-  cursor: pointer;
-  position: absolute;
-  top: 8px;
-  right: 5px;
-}
-
-.input-style {
-  padding: 7px 30px 7px 10px;
-  width: calc(100% - 40px);
-  border-radius: 3px;
-  border: 1px solid #999;
-  margin-bottom: 10px;
+.button {
+  background: white;
+  outline: none;
+  border: none;
 }

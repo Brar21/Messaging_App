@@ -106,6 +106,7 @@ $darkColor: #2f2d52; //diclair color variable with $ sign
         overflow: hidden;
 
         .sidebar {
+            // display: none;
             flex: 1;
             background-color: #3e3c61;
             position: relative;
@@ -209,6 +210,8 @@ $darkColor: #2f2d52; //diclair color variable with $ sign
 
         .chat {
             flex: 2;
+            // display: none;
+          
 
             .chatInfo {
                 height: 3.2rem;
@@ -230,7 +233,8 @@ $darkColor: #2f2d52; //diclair color variable with $ sign
                     cursor: pointer;
                 }
             }
-
+            
+        
         }
 
         .messages {
