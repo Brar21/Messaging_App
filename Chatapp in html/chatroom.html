@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Chat Teme</title>
+        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            .main_chatroom {
+                width: 100%;
+                height: 100vh;
+                display: flex;
+                margin: auto;
+            }
+
+            .messages_room {
+                width: 35%;
+            }
+
+            .personal_room {
+                width: 65%;
+            }
+
+            .upperSection {
+                width: 100%;
+                height: 8vh;
+                padding: 0.5rem;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                background-color: #2f2d52;
+                color: #abd0f7;
+                align-items: center;
+            }
+
+            .subsection {
+                display: flex;
+                margin: 0 1.5rem;
+                text-align: center;
+            }
+
+            .subsection h3 {
+                padding: 0.2rem 0.8rem;
+            }
+
+            .subsection img {
+                width: 2.2rem;
+                height: 2.2rem;
+                border-radius: 50%;
+            }
+
+            .subsection button {
+                padding: .5rem;
+                background-color: #5d5b8d;
+                border-radius: 2px;
+                border: none;
+                color: #abd0f7;
+            }
+
+            .secondSection {
+                width: 100%;
+                height: 92vh;
+                margin: auto;
+                background-color: #3e3c61;
+            }
+
+            .secondSection input {
+                align-items: center;
+                margin: 0 35%;
+                padding: 0.2rem 1rem;
+                border: none;
+                outline: none;
+                background-color: transparent;
+                font-size: 1.1rem;
+                color: white;
+            }
+
+            .secondSection input ::placeholder {
+                color: lightgray;
+            }
+
+            .chats {
+                display: flex;
+                height: 7rem;
+                /* padding: 5rem; */
+                align-items: center;
+                padding: 0 1rem;
+            }
+
+            .secondSection :hover {
+                background-color: #2f2d52;
+            }
+
+            .chats .profile_dp img {
+                width: 4.5rem;
+                height: 4.5rem;
+                border-radius: 50%;
+            }
+
+            .userName p {
+                color: white;
+                margin: 1rem;
+            }
+
+            .userName p b {
+                font-size: 20px;
+            }
+
+            .end button {
+                font-size: 2rem;
+                margin: 10px;
+            }
+
+            .personal_room .upperSection .end button :hover {
+                background-color: #2f2d52;
+                border-radius: 50%;
+                padding: 0.9rem;
+                cursor: pointer;
+            }
+
+            .personal_room .middleSection {
+                width: auto;
+                height: 82vh;
+                background-color: #ddddf7;
+            }
+
+            .middleSection .message {
+                margin: 1rem;
+            }
+
+            .middleSection .message img {
+                width: 1.8rem;
+                height: 1.8rem;
+                border-radius: 50%;
+                margin-left: 80%;
+
+            }
+
+            .middleSection .message p {
+                color: gray;
+            }
+
+            .personal_room .endSection {
+                width: 100%;
+                height: 10vh;
+                background-color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+            }
+
+            .personal_room .endSection div:last-child {
+                display: flex;
+                justify-content: space-evenly;
+            }
+
+            .middleSection .middleSectionOne {
+                width: 100%;
+                display: grid;
+                justify-content: end;
+            }
+
+            .middleSection .messageSectionOne {
+
+                width: auto;
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+            }
+
+            .middleSection .messageSectionOne .messageOne {
+                background-color: #8da4f1;
+                padding: 18px;
+                align-items: center;
+                border-radius: 10px 0px 10px 10px;
+            }
+
+            .middleSection .messageSectionOne .messageOne p {
+                color: white;
+            }
+
+            .endSection div:first-child {
+                width: 55%;
+                margin: auto;
+                align-self: center;
+            }
+
+            .endSection div:first-child input {
+                width: 100%;
+                height: 10vh;
+                outline: none;
+                border: none;
+                margin-right: 1%;
+                font-size: 1.8rem;
+                padding: 0 1rem;
+             
+            }
+
+            .endSection div:first-child input ::placeholder {
+                color: lightgray;
+            }
+            .endSection div:last-child {
+                width: 30%;
+            }
+
+            .endSection div:last-child button {
+                width: 40%;
+                align-self: center;
+                font-size: 4rem;
+                margin: 1%;
+                border: none;
+                background-color: transparent;
+            }
+            .endSection div:last-child button :hover{
+                cursor: pointer;
+            }
+            .endSection div:last-child button:nth-child(1){
+                color: gray;
+            }
+              .endSection div:last-child button:nth-child(2){
+                color: gray;
+            }
+              .endSection div:last-child button:nth-child(3){
+                color: white;
+                font-weight: 100;
+                background-color: #3e3c61;
+                padding: .8rem 10px;
+                font-size: 30px;
+                border-radius: 5px;
+                width: 5rem;
+            }
+            .endSection div:last-child button:nth-child(3):hover{
+                background-color: #3b378b;
+
+            } .endSection div:last-child button:nth-child(2):hover{
+                color: #3b378b;
+
+            }
+            .endSection div:last-child button:nth-child(1):hover{
+                color: #3b378b;
+
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="main_chatroom">
+            <div class="messages_room">
+                <div class="upperSection">
+                    <h2>CHAT TIME</h2>
+                    <div class="subsection">
+                        <img src="https://www.whatsappimages.in/wp-content/uploads/2021/07/Top-HD-sad-quotes-for-whatsapp-status-in-hindi-Pics-Images-Download-Free.gif"
+                            alt="profile_pic">
+                        <h3>Johon</h3>
+                        <button>logout</button>
+                    </div>
+                </div>
+                <div class="secondSection">
+                    <input type="text" placeholder="Find User">
+                    <hr>
+                    <div class="chats">
+                        <div class="profile_dp">
+                            <img src="https://thumbs.dreamstime.com/b/rainbow-love-heart-background-red-wood-60045149.jpg"
+                                alt="profile_pic">
+                        </div>
+                        <div class="userName">
+                            <p><b>Sandy</b></p>
+                            <p>Hello Sandy</p>
+                        </div>
+                    </div>
+                    <div class="chats">
+                        <div class="profile_dp">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNklw2QybiWYJO9W9wN2jNH5Jo6vLB28DR3l8lnxqYLy7DbcflCFtSADQLUtqgZW-jhL4&usqp=CAU"
+                                alt="profile_pic">
+                        </div>
+                        <div class="userName">
+                            <p><b>VARINDER .B</b></p>
+                            <p>Hello Brar</p>
+                        </div>
+                    </div>
+                    <div class="chats">
+                        <div class="profile_dp">
+                            <img src="https://mumbaimirror.indiatimes.com/photo/71714110.cms" alt="profile_pic">
+                        </div>
+                        <div class="userName">
+                            <p><b>ASKOBAR P</b></p>
+                            <p>Hello Pablo</p>
+                        </div>
+                    </div>
+                    <div class="chats">
+                        <div class="profile_dp">
+                            <img src="https://i.kym-cdn.com/entries/icons/facebook/000/018/655/image.jpg"
+                                alt="profile_pic">
+                        </div>
+                        <div class="userName">
+                            <p><b>J. DECK</b></p>
+                            <p>Hello Johny DECK</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="personal_room">
+                <div class="upperSection" style="background-color: #5d5b8d;">
+                    <h2>Sandy</h2>
+                    <div class="subsection end">
+                        <button> <i class="uil uil-video"></i></button>
+                        <button> <i class="uil uil-user-plus"></i></button>
+                        <button> <i class="uil uil-ellipsis-h"></i></button>
+                    </div>
+                </div>
+                <div class="middleSection">
+                    <div class="middleSectionOne">
+                        <div class="message">
+                            <img src="https://www.whatsappimages.in/wp-content/uploads/2021/07/Top-HD-sad-quotes-for-whatsapp-status-in-hindi-Pics-Images-Download-Free.gif"
+                                alt="profile_pic">
+                            <div class="messageSectionOne">
+
+                                <div class="messageOne">
+                                    <p>Hello Sandy</p>
+                                </div>
+                                <p>just now</p>
+                            </div>
+
+                        </div>
+                        <div class="message">
+                            <img src="https://www.whatsappimages.in/wp-content/uploads/2021/07/Top-HD-sad-quotes-for-whatsapp-status-in-hindi-Pics-Images-Download-Free.gif"
+                                alt="profile_pic">
+                            <div class="messageSectionOne">
+
+                                <div class="messageOne">
+                                    <p>How are you?</p>
+                                </div>
+                                <p>just now</p>
+                            </div>
+
+                        </div>
+                        <div class="message">
+                            <img src="https://www.whatsappimages.in/wp-content/uploads/2021/07/Top-HD-sad-quotes-for-whatsapp-status-in-hindi-Pics-Images-Download-Free.gif"
+                                alt="profile_pic">
+                            <div class="messageSectionOne">
+
+                                <div class="messageOne">
+                                    <p>what is plan for today?</p>
+                                </div>
+                                <p>just now</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="endSection">
+                    <div>
+                        <input type="text" placeholder="Type Something...">
+                    </div>
+                    <div>
+                        <button><i class="uil uil-paperclip"></i></button>
+                        <button><i class="uil uil-image-plus"></i></button>
+                        <button><i class="uil uil-message"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
