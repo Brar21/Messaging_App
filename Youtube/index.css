@@ -188,9 +188,28 @@ button{
     bottom: -100px;
 }
 
-
-
-
+#container{
+    width: 90%;
+    margin: auto;
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: auto;
+    gap: 1.5rem;
+    font-size: 1rem;
+    background-color: #f5f5f5;
+}
+#container div img{
+    width: 350px;
+    margin: auto;
+}
+#container div{
+    width: 100%;
+    margin: 0.7rem;
+}
+#container h3{
+    flex-wrap: nowrap;
+}
 
 
 
