@@ -210,7 +210,85 @@ button{
 #container h3{
     flex-wrap: nowrap;
 }
+.main {
+    width: 100vw;
+    display: flex;
+}
 
+#container2 {
+    width: auto;
+    margin-top: 70px;
+    margin-left: -40px;
+
+}
+
+iframe {
+    margin-left: 40px;
+}
+
+#container1 {
+    margin-top: 70px;
+
+}
+
+#container1 div {
+    margin: 30px 20px;
+}
+
+#inner {
+    width: 1300px;
+    height: 80px;
+
+    display: flex;
+    margin-right: 80px;
+    text-align: center;
+
+}
+
+#inner img {
+    width: 80px;
+    height: 80px;
+    margin-right: 20px;
+    border: 1px solid;
+    border-radius: 50%;
+}
+
+#inner p {
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+#hrt {
+    margin-top: 20px;
+}
+
+#time {
+    margin-top: 20px;
+}
+
+#main {
+    display: block;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#main img {
+    width: 200px;
+    height: 100px;
+}
+
+#main p {
+    margin-top: 15px;
+}
+
+#main h4 {
+    font-size: 15px;
+}
+
+#main:hover {
+    cursor: pointer;
+}
 
 
 
