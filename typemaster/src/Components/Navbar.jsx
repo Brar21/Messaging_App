@@ -1,15 +1,22 @@
 import { Link } from "react-router-dom";
+import "./navbar.css"
 
 function Navbar() {
     
-    return <>
-        <Link to="/">Home</Link>
-        <Link to="/testspeed">Test</Link>
-        <Link to="/techniques">Learn Techniques</Link>
-        <Link to="/login">Login</Link>
-        <p>or</p>
-        <Link to="/signup">SIGNUP</Link>
+    return <div className="nav">
+     
+        <h1>Type Master</h1>
+        <Link to="/"><strong>Typing Learner</strong></Link>
+        <Link to="/testspeed"><strong>Test</strong></Link>
+        <Link to="/techniques"><strong>Learn Techniques</strong></Link>
+        <div className="secondpart">
+            <Link to="/login"><strong>Login</strong></Link>
+            <b>or</b>
+            <Link to="/signup" className="signupButton"><strong>SIGNUP</strong></Link>
+        </div>
 
-    </>
+
+    </div>
 }
 export default Navbar;
+//No we can't do like simple or Vanila javascript so what we do?
