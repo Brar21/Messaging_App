@@ -36,3 +36,45 @@
     transform: rotate(360deg);
   }
 }
+.footer{
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  margin: auto;
+  /* border: 1px solid black; */
+  justify-content: space-around;
+  align-items: center;
+}
+
+.footer select{
+  border: none;
+}
+.footer select:hover{
+  text-decoration: underline;
+}
+.footer select option{
+  margin: 10px;
+  font-size: larger;
+  padding: 10px;
+  background-color: yellow;
+}
+.footer h3{
+  padding: 5px 10px;
+  background-color: seagreen;
+  color: white;
+  border-radius: 5px;
+}
+
+.footer p:hover{
+  text-decoration: underline;
+}
+.footer strong{
+  padding: 5px 10px;
+  border: 1px solid seagreen;
+  border-radius: 5px;
+  color: seagreen;
+}
+.headDiv{
+  width: 80%;
+  margin: auto;
+}
