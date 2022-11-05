@@ -5,10 +5,10 @@ function Navbar() {
     
     return <div className="nav">
      
-        <h1>Type Master</h1>
-        <Link to="/"><strong>Typing Learner</strong></Link>
-        <Link to="/testspeed"><strong>Test</strong></Link>
-        <Link to="/techniques"><strong>Learn Techniques</strong></Link>
+        <Link to='/'><h1>Type Master</h1></Link> 
+        <Link to="/typingteacher"><strong>TYPING TEACHER</strong></Link>
+        <Link to="/testspeed"><strong>TEST SPEED</strong></Link>
+        <Link to="/techniques"><strong>LERANING TOOL</strong></Link>
         <div className="secondpart">
             <Link to="/login"><strong>Login</strong></Link>
             <b>or</b>
