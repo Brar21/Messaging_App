@@ -10,8 +10,9 @@ function App() {
   return (
  
     <Box className="App" >
-
+      <Box bg='#577b87' p='1.5rem'>
         <Navbar />
+        </Box>
         <AllRoutes />
         <Footer />
       </Box>

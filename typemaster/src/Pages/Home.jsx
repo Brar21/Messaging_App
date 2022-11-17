@@ -3,7 +3,7 @@ import {
     Menu,
     MenuButton,
     MenuList,
-    MenuItem
+    MenuItem,Select
 } from '@chakra-ui/react';
 
 import { FaRegKeyboard } from "react-icons/fa";
@@ -12,18 +12,24 @@ function Home() {
 
     return <Box bg='#f3f3f3'>
     <Box bg = '#577b87' h = '60vh' >
-        <Box  w='80%' h='80vh' m='auto' mt='2rem' display='flex' justifyContent='space-evenly' >
+        <Box  w='80%' m='auto'  display='flex' justifyContent='space-evenly' >
             <Box>
                 <Image src='https://ichef.bbci.co.uk/images/ic/1280xn/p0252jmf.jpg' alt='Home_page' w='40rem' h='20rem' mt='2rem'></Image>
             </Box>
             <Box display='flex' flexDirection='column'>
                 <Heading color='white' textAlign='start' mb='1rem' mt='2rem'>Type Fater</Heading>
                 <Text mb='1rem' textAlign='start' color='white'>Check your typing speed online. Grow your typing ablity with our free lessons</Text>
-                <Menu>
-                    <MenuButton alignContent='start'mt='1rem'ml='0.5rem' w='10rem' mb='5rem' as={Button}  leftIcon={<FaRegKeyboard/>}>
+                    <Box display='flex'> <FaRegKeyboard fontSize='20px' color='white' /> <Select placeholder='Select option' w='100px' bg="transparent" border='none' mb="10px" color='white' textDecoration='underline'>
+                        <option value='english'>Enlgish</option>
+                        <option value='hindi'>Hindi</option>
+                        <option value='french'>French</option>
+                    </Select>
+                    </Box>  
+                    {/* <Menu>
+                    <MenuButton alignContent='start'mt='1rem'ml='2.5rem' w='10rem' mb='5rem' as={Button}  leftIcon={<FaRegKeyboard/>}>
                         Language
                     </MenuButton>
-                    <MenuList >
+                    <MenuList pl='6.5rem' >
                         <MenuItem>Enlgish</MenuItem>
                         <MenuItem>Dutch</MenuItem>
                         <MenuItem>French</MenuItem>
@@ -31,7 +37,7 @@ function Home() {
                         <MenuItem>Hindi</MenuItem>
                         </MenuList>
                         <Button width='80%' m='auto' mt='1px' colorScheme='blue'>Start your Typing Test</Button>
-                </Menu>
+                </Menu> */}
                 
             </Box>
 
