@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { GrCertificate } from "react-icons/gr";
 import { SlSpeedometer } from "react-icons/sl";
 import { GiOnTarget } from "react-icons/gi";
+import { AiOutlineArrowRight } from "react-icons/ai";
 function Test() {
 
     return (
@@ -39,35 +40,41 @@ function Test() {
                                 
                                 <Thead w='50%'>
                                     <Tr  display='flex' flexDirection='row' w='100%' justifyContent='space-between'>
-                                        <Th display='flex' gap='1px'><GrCertificate fontSize={20}/>CERTIFICATE</Th>
-                                        <Th display='flex' gap='1px' ml='-2rem'><SlSpeedometer fontSize={20} />SPEED</Th>
-                                        <Th display='flex' gap='1px'><GiOnTarget fonrSize={20} />ACCURACY</Th>
+                                        <Th display='flex' gap='5px' pl="1rem"><GrCertificate fontSize={20}/>CERTIFICATE</Th>
+                                        <Th display='flex' gap='5px' ml='2rem'><SlSpeedometer fontSize={20} />SPEED</Th>
+                                        <Th display='flex' gap='5px'><GiOnTarget fonrSize={20} />ACCURACY</Th>
                                     </Tr>
                                 </Thead>
-                                <Tbody>
+                                <hr />
+                                <Tbody fontWeight='500'>
                                     <Tr  display='flex' flexDirection='row' w='100%' justifyContent='space-between' alignItems='center'>
-                                        <Td>PLATINUM</Td>
+                                        <Td display='flex' textAlign='center'><Image w={30} src='https://cdn.vectorstock.com/i/preview-1x/65/82/silver-rosette-vector-996582.jpg' /><Text pt={2}>PLATINUM</Text></Td>
                                         <Td pl='5px'>70 WPM</Td>
                                         <Td>99.5%</Td>
                                     </Tr>
+                                    <hr />
                                     <Tr  display='flex' flexDirection='row' w='100%' justifyContent='space-between'>
-                                        <Td>GOLD</Td>
+                                        <Td display='flex' textAlign='center' ><Image w={35} src='https://static.vecteezy.com/system/resources/previews/005/724/486/original/gold-circle-medal-with-red-ribbon-golden-round-trophy-for-first-place-of-competition-metal-award-for-leader-on-white-background-honor-victory-prize-isolated-illustration-vector.jpg' /><Text pt={3}>GOLD</Text></Td>
                                         <Td pr='5px'>50 WPM</Td>
                                         <Td>98.7%</Td>
                                     </Tr>
+                                    <hr />
                                     <Tr  display='flex' flexDirection='row' w='100%' justifyContent='space-between'>
-                                        <Td>SILVER</Td>
+                                        <Td display='flex' textAlign='center'><Image w={30} src='https://t3.ftcdn.net/jpg/04/87/34/18/360_F_487341885_43bjb9IUYv8c7Fhxm5kp9KgvWgZUeNMo.jpg' /><Text pt={2}>SILVER</Text></Td>
                                         <Td>40 WPM</Td>
                                         <Td>96%</Td>
                                     </Tr>
+                                    <hr />
                                 </Tbody>
                             </Table>
                         </TableContainer>
                     </Box>
                     <Box width='30%' m='1rem'>
-                        <Text textAlign='start'>
+                        <Text textAlign='start' fontSize={18}>
                             You can take the test as many times as you want! Only the best score will count towards your certification, there’s no need to worry about making a mistake.</Text>
-                        <Link to='testpage'>Take Typing Test</Link>
+                        <Box display='flex' h='5rem' mt={5} color='blue' fontSize={20} fontWeight='500' textAlign='center' _hover={{ textDecoration: "underline",gap:"1.5rem" }} gap='0.5rem' >
+                            <Text textAlign='start' pb='5rem' ><Link to='testpage'>Take Typing Test</Link> </Text><Text pt={1} fontSize={22}><AiOutlineArrowRight /></Text>
+                        </Box>
                     </Box>
                 </Box>
             </Box>
