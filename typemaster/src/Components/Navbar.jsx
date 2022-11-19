@@ -8,7 +8,7 @@ function Navbar() {
         <Link to='/'><h1>Type Master</h1></Link> 
         <Link to="/typingteacher"><strong>TYPING TEACHER</strong></Link>
         <Link to="/testspeed"><strong>TEST SPEED</strong></Link>
-        <Link to="/techniques"><strong>LERANING TOOL</strong></Link>
+        <Link to="/techniques" ><strong >LERANING TOOL</strong></Link>
         <div className="secondpart">
             <Link to="/login"><strong>Login</strong></Link>
             <b>or</b>

@@ -3,9 +3,9 @@ import "../App.css"
 function Footer() {
      
     return (
-        <div className="headDiv">
-    <hr />
-        <div className="footer">
+        <div className="headDiv" >
+    <hr color="green" />
+        <div className="footer" >
     
         
             <h3>For Devlopers</h3>
