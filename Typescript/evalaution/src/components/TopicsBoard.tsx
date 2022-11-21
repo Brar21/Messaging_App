@@ -6,6 +6,8 @@ import {
     Heading,
     SimpleGrid,
 } from "@chakra-ui/react";
+//smjh e nai aa rha
+
 
 import { TopicsContext } from "../context/TopicsContext";
 import TopicSection from "./TopicSection";

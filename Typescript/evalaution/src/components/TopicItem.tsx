@@ -5,7 +5,9 @@ import { BiLike, BiTrash } from "react-icons/bi";
 import { TopicsContext } from "../context/TopicsContext";
 import { Topic, topicInfo } from "../constants";
 
-interface TopicItemProps extends Topic { }
+interface TopicItemProps extends Topic { };
+//sara uper se jaa rha hai
+
 
 const TopicItem = (props: TopicItemProps) => {
     const info = topicInfo[props.type];
