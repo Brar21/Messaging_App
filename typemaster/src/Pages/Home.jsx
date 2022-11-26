@@ -1,9 +1,6 @@
-import { Box, Heading, Text, Image,Button } from '@chakra-ui/react';
+import { Box, Heading, Text, Image } from '@chakra-ui/react';
 import {
-    Menu,
-    MenuButton,
-    MenuList,
-    MenuItem,Select
+Select
 } from '@chakra-ui/react';
 
 import { FaRegKeyboard } from "react-icons/fa";
@@ -14,7 +11,7 @@ function Home() {
     <Box bg = '#577b87' h = '60vh' >
         <Box  w='80%' m='auto'  display='flex' justifyContent='space-evenly' >
             <Box>
-                <Image src='https://ichef.bbci.co.uk/images/ic/1280xn/p0252jmf.jpg' alt='Home_page' w='40rem' h='20rem' mt='2rem'></Image>
+                <Image src='https://ichef.bbci.co.uk/images/ic/1280xn/p0252jmf.jpg' alt='Home_page' w='20rem' h='10rem' mt='2rem'></Image>
             </Box>
             <Box display='flex' flexDirection='column'>
                 <Heading color='white' textAlign='start' mb='1rem' mt='2rem'>Type Fater</Heading>

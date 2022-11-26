@@ -1,13 +1,11 @@
-import { Container, Box, Image, Text, Button, Heading, useDisclosure } from '@chakra-ui/react';
+import {  Box, Image, Text, Button, Heading, useDisclosure } from '@chakra-ui/react';
 import {
     Table,
     Thead,
     Tbody,
-    Tfoot,
     Tr,
     Th,
     Td,
-    TableCaption,
     TableContainer,
 } from '@chakra-ui/react';
 import {
@@ -47,19 +45,19 @@ function Test() {
                             onClose={onClose}
                             isCentered
                             size="2xl"
-                          
+
                         >                                <AlertDialogOverlay  >
                                 <AlertDialogContent  >
                                     <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                                        <Text bg='beige' w='150px' h='150px' borderRadius='50%' m='auto' p="5% 5.8%"><VscDebugStart fontSize={90} fill='green'  /></Text>
+                                        <Text bg='beige' w='150px' h='150px' borderRadius='50%' m='auto' p="5% 5.8%"><VscDebugStart fontSize={90} fill='green' /></Text>
                                     </AlertDialogHeader>
 
-                                    <AlertDialogBody m='auto'  fontSize={23} fontWeight='600'>
+                                    <AlertDialogBody m='auto' fontSize={23} fontWeight='600'>
                                         <Text display='flex'> You can <span > <Link to='/donate'><Text pl={2} _hover={{ color: "blue", textDecoration: 'underline' }}>thanks us and Donate</Text></Link></span></Text>
                                     </AlertDialogBody>
 
                                     <AlertDialogFooter m='1rem auto'>
-                                        <Button onClick={onClose} colorScheme='whatsapp' p='2rem 2.5rem'fontSize={30}>
+                                        <Button onClick={onClose} colorScheme='whatsapp' p='2rem 2.5rem' fontSize={30}>
                                             <Link to="/testspeed/test">Start Typing Test</Link>
                                         </Button>
 

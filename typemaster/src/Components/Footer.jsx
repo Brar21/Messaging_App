@@ -6,8 +6,6 @@ function Footer() {
         <div className="headDiv" >
     <hr color="green" />
         <div className="footer" >
-    
-        
             <h3>For Devlopers</h3>
             <p>About</p>
             <p>High Scores</p>
