@@ -35,13 +35,13 @@ function App() {
      { detial.length===0 ?  <button onClick={login}>
           Google Login
               </button>:detial.map((e) =>
-              {
+              (
                   <div className='jaddu'>
                       <p style={{color:'red'}}>{e.name}</p>
                       <img src={e.picture} alt="kuch be" />
                       <button>logout</button>
                       </div>
-              })}
+              ))}
               
 
 
