@@ -13,6 +13,13 @@ function App() {
 //        renderCount.current=renderCount.current+1
 //}) //simple way
     const inputRef=useRef();
+    const prevName=useRef();
+
+    useEffect(() =>
+    {
+        prevName.current=name
+    })
+
     function focus()
     {
         inputRef.current.focus()
@@ -22,7 +29,10 @@ function App() {
   return (
     <div className="App">
           <input ref={inputRef} value={name} onChange={e => setName(e.target.value)} />
+          {/*<input value={name} onChange={e => setName(e.target.value)} />*/}
           <div>My Name is {name}</div>
+          <div>My Name letter {prevName.current}</div>
+
           {/*<div>I rendered {renderCount.current} times</div>*/}
           <button onClick={focus}>Focus</button>
     </div>
