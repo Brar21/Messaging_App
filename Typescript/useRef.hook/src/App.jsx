@@ -1,40 +1,37 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import {useEffect} from 'react';
 import {useRef} from 'react';
+import {useState} from 'react';
+import './App.css';
 
 function App() {
     const [name,setName]=useState("");
-    //const [renderCount,setRenderCount]=useState(0)//bad practice
-    //const renderCount=useRef(1)
-//    useEffect(() =>
-//    {
-//    //setRenderCount(prev=>prev+1)
-//        renderCount.current=renderCount.current+1
-//}) //simple way
-    const inputRef=useRef();
-    const prevName=useRef();
 
+    const wordMemorise=useRef();
+    //const [renderCounts,Setrender]=useState(0);
+    //const renderCount=useRef(1);
     useEffect(() =>
     {
-        prevName.current=name
+        wordMemorise.current=name;
+        ////Setrender(prev=>prev+1)
+        //renderCount.current=renderCount.current+1
     })
+
+    const InputHighlight=useRef();
 
     function focus()
     {
-        inputRef.current.focus()
-        inputRef.current.value="useRef Hook";
-        
+        InputHighlight.current.focus()
+        //InputHighlight.current.value="useRef Hook Video"
     }
   return (
     <div className="App">
-          <input ref={inputRef} value={name} onChange={e => setName(e.target.value)} />
-          {/*<input value={name} onChange={e => setName(e.target.value)} />*/}
-          <div>My Name is {name}</div>
-          <div>My Name letter {prevName.current}</div>
+          <input ref={InputHighlight} value={name} onChange={e => setName(e.target.value)} />
+          <div>My input is {name}</div>
+          <div>My last Entred words {wordMemorise.current}</div>
+          <button onClick={focus}>Focus to Input tag</button>
+          {/*<div>How many time render {renderCounts}</div>*/}
 
-          {/*<div>I rendered {renderCount.current} times</div>*/}
-          <button onClick={focus}>Focus</button>
+          {/*<div>How many time render {renderCount.current}</div>*/}
     </div>
   )
 }
