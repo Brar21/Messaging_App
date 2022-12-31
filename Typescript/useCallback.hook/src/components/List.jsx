@@ -6,7 +6,7 @@ export default function List({getCount})
 
     useEffect(() =>
     {
-        setItems(getCount())
+        setItems(getCount(50))
         console.log("changings")
     },[getCount])
     return items.map(el => <div key={el}>{el}</div>)

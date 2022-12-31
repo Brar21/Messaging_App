@@ -10,9 +10,9 @@ function App() {
   
 
  
-    const getCount=useCallback(() =>
+    const getCount=useCallback((addon)=>
     {
-        return [count,count+9,count+10]
+        return [count*addon,count+9,count+10-addon]
     },[count])
     const darkTheme={
         backgroundColor: theme? "red":"white",
