@@ -1,46 +1,37 @@
-import { useEffect, useMemo, useState } from 'react'
-import './App.css'
+import {useEffect,useMemo,useState} from 'react';
+import './App.css';
 
 function App() {
     const [num,setNum]=useState(1)
     const [darkWeb,SetDarkweb]=useState(false)
-    const Add2Number=useMemo(() =>{return ReduceSpeed(num)},[num]) //1 step
-    const themeChanger=useMemo(() =>//3rd step
+
+    const SlowNumber=useMemo(()=>{return SlowPerformance(num)},[num])//1step
+
+    const themeChanger=useMemo(() =>//3 step
     {
-        
-       return {
-            backgroundColor: darkWeb? "yellow":"gray",
-            color: darkWeb? "gray":"yellow"
-        }
+            return{ backgroundColor: darkWeb? "yellow":"gray",
+            color: darkWeb? "gray":"yellow"}
     },[darkWeb])
     
-
-
-    useEffect(() =>
+    useEffect(() =>//2nd step
     {
-        console.log("theme rendring in both cases")//2 step
+        console.log("themechanger render in both cases")
     },[themeChanger])
-
+//console.log("reder code")
   return (
     <div className="App" style={themeChanger}>
           <input type="number" value={num} onChange={e => setNum(parseInt(e.target.value))} />
           <button onClick={() => SetDarkweb(dark=>!dark)}>Theme Toggler</button>
-          <div>{Add2Number}</div>
+          <div>{SlowNumber}</div>
     </div>
   )
 }
 
-function ReduceSpeed(number)
+function SlowPerformance(number)
 {
-    console.log("how much slow?")
-    for(let i=0;i<=10000000;i++)
-    {}
-        return number+2
-    
+    console.log("slowness of web")
+    for(let i=0;i<=100000000;i++){}
+    return number+5
 }
-
-
-
-
 
 export default App
