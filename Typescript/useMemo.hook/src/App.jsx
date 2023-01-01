@@ -1,10 +1,14 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import './App.css'
 
 function App() {
     const [num,setNum]=useState(1)
     const [darkWeb,SetDarkweb]=useState(false)
-const Multiply2Number=ReduceSpeed(num)
+    const Multiply2Number=useMemo(() =>
+    {
+        
+    })
+        ReduceSpeed(num)
     const themeChanger={
         backgroundColor: darkWeb? "yellow":"gray",
         color: darkWeb? "gray":"yellow"
@@ -22,7 +26,7 @@ const Multiply2Number=ReduceSpeed(num)
 function ReduceSpeed(number)
 {
     console.log("how much slow?")
-    for(let i=0;i<=10000000000;i++)
+    for(let i=0;i<=10000000;i++)
     {}
         return number*2
     
