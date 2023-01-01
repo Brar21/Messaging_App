@@ -4,11 +4,7 @@ import './App.css'
 function App() {
     const [num,setNum]=useState(1)
     const [darkWeb,SetDarkweb]=useState(false)
-    const Multiply2Number=useMemo(() =>
-    {
-        
-    })
-        ReduceSpeed(num)
+    const Multiply2Number=useMemo(() =>{ReduceSpeed(num)})
     const themeChanger={
         backgroundColor: darkWeb? "yellow":"gray",
         color: darkWeb? "gray":"yellow"
