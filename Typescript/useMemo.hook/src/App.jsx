@@ -4,8 +4,8 @@ import './App.css'
 function App() {
     const [num,setNum]=useState(1)
     const [darkWeb,SetDarkweb]=useState(false)
-    const Add2Number=useMemo(() =>{return ReduceSpeed(num)},[num])
-    const themeChanger=useMemo(() =>
+    const Add2Number=useMemo(() =>{return ReduceSpeed(num)},[num]) //1 step
+    const themeChanger=useMemo(() =>//3rd step
     {
         
        return {
@@ -18,7 +18,7 @@ function App() {
 
     useEffect(() =>
     {
-        console.log("theme rendring in both cases")
+        console.log("theme rendring in both cases")//2 step
     },[themeChanger])
 
   return (
