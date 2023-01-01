@@ -14,7 +14,7 @@ const Multiply2Number=ReduceSpeed(num)
     <div className="App" style={themeChanger}>
           <input type="text" value={num} onChange={() => setNum(parseInt(e => e.target.value))} />
           <button onClick={() => SetDarkweb(dark!=dark)}>Theme Toggler</button>
-          <div></div>
+          <div>{Multiply2Number}</div>
     </div>
   )
 }
