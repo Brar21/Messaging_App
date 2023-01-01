@@ -5,15 +5,21 @@ function App() {
     const [num,setNum]=useState(1)
     const [darkWeb,SetDarkweb]=useState(false)
     const Add2Number=useMemo(() =>{return ReduceSpeed(num)},[num])
-    const themeChanger={
-        backgroundColor: darkWeb? "yellow":"gray",
-        color: darkWeb? "gray":"yellow"
-    }
+    const themeChanger=useMemo(() =>
+    {
+        
+       return {
+            backgroundColor: darkWeb? "yellow":"gray",
+            color: darkWeb? "gray":"yellow"
+        }
+    },[darkWeb])
+    
+
 
     useEffect(() =>
     {
         console.log("theme rendring in both cases")
-    },[darkWeb])
+    },[themeChanger])
 
   return (
     <div className="App" style={themeChanger}>
