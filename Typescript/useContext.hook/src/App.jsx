@@ -40,7 +40,7 @@ function Counter4()
     return (
         <>
         <h1>Counter 4</h1>
-        <Counter5/>
+            <Counter5 />
         </>
     )
 }
@@ -48,7 +48,10 @@ function Counter5()
 {
     const counter=useContext(Count)
     return (
+        <>
         <h1>Counter 5</h1>
+        <h2>{counter}</h2>
+        </>
     )
 }
 export default App
