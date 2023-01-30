@@ -39,7 +39,6 @@ if(err){
             if(err){
                 console.log("")
                 res.end(err)
-                
             }
             else{
                 res.end(`The IP Address is 'ip address of passed website' ${address}`)
