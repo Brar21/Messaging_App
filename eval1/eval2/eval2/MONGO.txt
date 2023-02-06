@@ -1,0 +1,85 @@
+Create a db named "graduates".
+use graduate
+Create a db named "graduates".
+db.createCollection("users")
+
+Insert the above data in the collection.
+ db.users.insertMany(copy data)
+
+Show the data of "Male" users who are "Single".
+ graduates> db.users.find({gender:"Male",isMarried:false})
+[
+  {
+    _id: ObjectId("63b2b705e810bdd6a9bd4a8f"),
+    first_name: 'Pebrook',
+    last_name: 'Currum',
+    percentage: 82,
+    gender: 'Male',
+    university: 'Universidade Cruzeiro do Sul',
+    isMarried: false
+  },
+  {
+    _id: ObjectId("63b2b705e810bdd6a9bd4a90"),
+    first_name: 'Sidney',
+    last_name: 'Corbert',
+    percentage: 82,
+    gender: 'Male',
+    university: 'Hogeschool voor Wetenschap en Kunst (VLEKHO), Brussel',
+    isMarried: false
+  }
+]
+
+Show the data of all the "Female" users who scored more that 80 percent.
+db.users.find({$and:[{gender:"Female"},{percentage:{$gt:80}}]})
+
+
+Show the data of all the users who scored more than or equal to 50 percent.
+
+graduates> db.users.find({$or:[{percentage:{$gt:50}},{percentage:50}]})
+[
+  {
+    _id: ObjectId("63b2b705e810bdd6a9bd4a8d"),
+    first_name: 'Phyllida',
+    last_name: 'Gauntlett',
+    percentage: 73,
+    gender: 'Non-binary',
+    university: 'Medical Academy in Bialystok',
+    isMarried: false
+  },
+  {
+    _id: ObjectId("63b2b705e810bdd6a9bd4a8f"),
+    first_name: 'Pebrook',
+    last_name: 'Currum',
+    percentage: 82,
+    gender: 'Male',
+    university: 'Universidade Cruzeiro do Sul',
+    isMarried: false
+  },
+  {
+    _id: ObjectId("63b2b705e810bdd6a9bd4a90"),
+    first_name: 'Sidney',
+    last_name: 'Corbert',
+    percentage: 82,
+    gender: 'Male',
+    university: 'Hogeschool voor Wetenschap en Kunst (VLEKHO), Brussel',
+    isMarried: false
+  }
+]
+
+Update the data of all the "Female" users and add a field "scholarship":true.
+graduates> db.users.updateMany({gender:"Female"},{$set:{schoolarship:true}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+
+Delete the data of all the users who scored less than 40 percent.
+
+graduates> db.users.remove({percentage:{$lt:40}})
+DeprecationWarning: Collection.remove() is deprecated. Use deleteOne, deleteMany, findOneAndDelete, or bulkWrite.
+{ acknowledged: true, deletedCount: 1 }
+graduates> db.users.deleteMany({percentage:{$lt:40}})
+{ acknowledged: true, deletedCount: 0 }

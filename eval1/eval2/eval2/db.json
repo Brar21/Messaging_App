@@ -1,0 +1,36 @@
+{
+    "students": [
+        {
+            "roll_no": 1,
+            "name": "sonia",
+            "location": "jind",
+            "course": "coding"
+        },
+        {
+            "roll_no": 3,
+            "name": "sonia",
+            "location": "jind",
+            "course": "yes"
+        },
+        {
+            "roll_no": 1,
+            "name": "sonia",
+            "location": "jind",
+            "course": "coding"
+        },
+        {
+            "roll_no": 5,
+            "name": "varinder",
+            "location": "nabha",
+            "course": "yes"
+        }
+    ],
+    "teachers": [
+        {
+            "emp_id": 1,
+            "name": "soni",
+            "sub": "sdfs",
+            "exp": 3
+        }
+    ]
+}
