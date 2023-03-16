@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Page</title>
+    <style>
+      /* All Your css for Order page goes here  */
+      #order-container {
+        width: 90%;
+        margin: auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+      }
+      #order-container > div {
+        padding: 10px;
+        border: 1px solid lightgray;
+      }
+      #order-container > div > img {
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+      }
+      #order-container > div > button {
+        text-align: center;
+        color: white;
+        font-weight: 600;
+        background-color: #2bb6f6;
+        border: none;
+        outline: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav">
+      <h1>Web Coffee Shop Menu</h1>
+      <a href="./index.html">Home</a>
+      <a href="./order.html">Ordered</a>
+    </div>
+    <h1 id="total">
+      Your total order value is :- <span id="order-total">0</span>
+    </h1>
+    <div id="cupon">
+      <input type="text" />
+      <button onclick="addCoupon()">Add Cupon</button>
+    </div>
+    <div id="order-container">
+      <!-- Here Append All the Order Cards here-->
+    </div>
+  </body>
+  <script>
+    let data = JSON.parse(localStorage.getItem("buy")) || [];
+    let container = document.getElementById("order-container");
+    let order = document.getElementById("order-total");
+    let coupon = document.querySelector("#cupon>input");
+    function showData(data) {
+      container.innerHTML = "";
+      var total = 0;
+      data.forEach((elem, i) => {
+        total += +elem.quantity * +elem.price;
+        let div = document.createElement("div");
+        let img = document.createElement("img");
+        img.src = elem.image;
+        let title = document.createElement("h3");
+        title.innerText = elem.title;
+        let desc = document.createElement("p");
+        desc.innerText = elem.description;
+        let price = document.createElement("p");
+        price.innerText = `Rs. ${elem.price}`;
+        let dec = document.createElement("button");
+        dec.innerText = "-";
+        let quantity = document.createElement("p");
+        quantity.innerText = elem.quantity;
+        let inc = document.createElement("button");
+        inc.innerText = "+";
+        let cancel = document.createElement("button");
+        cancel.innerText = "Cancel";
+        cancel.addEventListener("click", () => {
+          removeFromCart(i);
+        });
+        div.append(img, title, desc, price, dec, quantity, inc, cancel);
+        container.appendChild(div);
+      });
+      order.innerText = total;
+    }
+    showData(data);
+    function removeFromCart(i) {
+      data.splice(i, 1);
+      localStorage.setItem("buy", JSON.stringify(data));
+      showData(data);
+    }
+    let applied = 0;
+    function addCoupon() {
+      if (coupon.value == "Masai30") {
+        if (applied === 0) {
+          let a = order.innerText;
+          let discount = +a - (+a / 100) * 30;
+          order.innerText = Math.floor(discount);
+          applied++;
+        }
+      }
+    }
+  </script>
+</html>

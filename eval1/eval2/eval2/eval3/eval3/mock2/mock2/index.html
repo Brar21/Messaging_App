@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Players page</title>
+    <style>
+      .navbar {
+        display: flex;
+        padding: 1rem;
+        justify-content: space-evenly;
+        background-color: aliceblue;
+      }
+      .navbar a {
+        text-decoration: none;
+        color: rgb(172, 15, 172);
+        font-weight: 600;
+        font-size: 22px;
+      }
+      h1 {
+        text-align: center;
+      }
+      .players {
+        width: 80%;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        gap: 1rem;
+      }
+      .box {
+        width: 200px;
+        border: 1px solid rgb(219, 219, 219);
+        padding: 1rem;
+        text-align: center;
+        background-color: #f5f5dc;
+      }
+      .modal {
+        position: absolute;
+        left: 40%;
+        top: 15%;
+        width: 20vw;
+        height: 70vh;
+        padding: 1rem;
+        text-align: center;
+      }
+      .box img {
+        width: 50%;
+      }
+      .box button {
+        padding: 7px 10px;
+        color: white;
+        background-color: #9d4bca;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .dn {
+        display: none;
+      }
+      .db {
+        display: block;
+      }
+      .pagination {
+        text-align: center;
+        padding: 2rem 0;
+      }
+      .search {
+        text-align: center;
+        padding: 2rem 0;
+      }
+      .pagination button {
+        cursor: pointer;
+      }
+      input {
+        padding: 10px;
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="./">Players</a>
+      <a href="./games.html">Games</a>
+    </nav>
+    <h1>Players Page</h1>
+    <div class="search">
+      <label>Search Players : </label>
+      <input class="input" type="text" placeholder="search players" />
+    </div>
+    <div class="players"></div>
+    <div class="modal dn"></div>
+    <div class="pagination">
+      <button>1</button>
+      <button>2</button>
+      <button>3</button>
+      <button>4</button>
+      <button>5</button>
+      <button>6</button>
+      <button>7</button>
+      <button>8</button>
+      <button>9</button>
+      <button>10</button>
+    </div>
+  </body>
+  <script>
+    let players = document.querySelector(".players");
+    let buttons = document.querySelectorAll(".pagination>button");
+
+    const getPlayers = async (page = 1, search) => {
+      let url = "";
+      if (page && search) {
+        url = `https://www.balldontlie.io/api/v1/players?per_page=10&page=${page}&search=${search}`;
+      } else if (page) {
+        url = `https://www.balldontlie.io/api/v1/players?per_page=10&page=${page}`;
+      } else {
+        url = `https://www.balldontlie.io/api/v1/players?per_page=10&search=${search}`;
+      }
+      await fetch(url)
+        .then((res) => res.json())
+        .then((res) => showPlayers(res.data))
+        .catch((err) => console.log(err));
+    };
+    getPlayers();
+    document.querySelector(".input").oninput = () => {
+      getPlayers(1, document.querySelector(".input").value);
+    };
+    function showPlayers(data) {
+      players.innerHTML = "";
+      data.forEach((item) => {
+        let div = document.createElement("div");
+        div.classList.add("box");
+        let img = document.createElement("img");
+        img.src =
+          "https://www.pngall.com/wp-content/uploads/5/Profile-Male-PNG.png";
+        let name = document.createElement("p");
+        name.innerText = `Name : ${item.first_name} ${item.last_name} `;
+        let position = document.createElement("p");
+        position.innerText = `Position : ${item.position} `;
+        let button = document.createElement("button");
+        button.innerText = "TEAM DETAILS";
+        button.addEventListener("click", () => {
+          showModal(item);
+        });
+        div.append(img, name, position, button);
+        players.appendChild(div);
+      });
+    }
+    function showModal(item) {
+      console.log(item);
+      let modal = document.querySelector(".modal");
+      modal.innerHTML = "";
+      let div = document.createElement("div");
+      div.classList.add("box");
+      let img = document.createElement("img");
+      img.src =
+        "https://www.pngall.com/wp-content/uploads/5/Profile-Male-PNG.png";
+      let name = document.createElement("p");
+      name.innerText = `Name : ${item.first_name} ${item.last_name} `;
+      let position = document.createElement("p");
+      position.innerText = `Position : ${item.position} `;
+      let button = document.createElement("button");
+      button.innerText = "TEAM DETAILS";
+      let team = document.createElement("p");
+      team.innerText = `Team : ${item.team.name} `;
+      let abbr = document.createElement("p");
+      abbr.innerText = `Abbr : ${item.team.abbreviation} `;
+      let conference = document.createElement("p");
+      conference.innerText = `Conference : ${item.team.conference} `;
+      let division = document.createElement("p");
+      division.innerText = `Division : ${item.team.division} `;
+      let city = document.createElement("p");
+      city.innerText = `City : ${item.team.city} `;
+      let close = document.createElement("button");
+      close.innerText = "Close";
+      close.addEventListener("click", () => {
+        modal.classList.remove("db");
+      });
+      div.append(
+        img,
+        name,
+        position,
+        button,
+        team,
+        abbr,
+        conference,
+        division,
+        city,
+        close
+      );
+      modal.appendChild(div);
+      modal.classList.add("db");
+    }
+
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener("click", () => {
+        getPlayers(buttons[i].innerText);
+      });
+    }
+  </script>
+</html>

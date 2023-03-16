@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .navbar {
+        display: flex;
+        padding: 1rem;
+        justify-content: space-evenly;
+        background-color: aliceblue;
+      }
+      .navbar a {
+        text-decoration: none;
+        color: rgb(172, 15, 172);
+        font-weight: 600;
+        font-size: 22px;
+      }
+      .header {
+        text-align: center;
+      }
+      .teams {
+        width: 80%;
+        margin: auto;
+      }
+      .match {
+        display: flex;
+        margin: 1rem auto;
+      }
+      .match > div:nth-child(1) {
+        width: 38%;
+      }
+      .match > div:nth-child(2) {
+        font-size: 30px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 10%;
+      }
+      .match > div:nth-child(3) {
+        width: 38%;
+      }
+      .match > div {
+        padding: 1rem;
+        background-color: aliceblue;
+      }
+      .match > div > img {
+        width: 25%;
+      }
+      .inputs {
+        text-align: center;
+      }
+      .inputs input {
+        padding: 5px;
+      }
+      .pagination {
+        text-align: center;
+        padding: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="./index.html">Players</a>
+      <a href="./games.html">Games</a>
+    </nav>
+    <h1 class="header">Games Page</h1>
+    <div class="inputs">
+      <label>Start Date</label>
+      <input class="date1" onchange="submit()" type="date" />
+      <br />
+      <label>End Date</label>
+      <input class="date2" onchange="submit()" type="date" />
+    </div>
+    <div class="teams"></div>
+    <div class="pagination">
+      <button>1</button>
+      <button>2</button>
+      <button>3</button>
+      <button>4</button>
+      <button>5</button>
+      <button>6</button>
+      <button>7</button>
+      <button>8</button>
+      <button>9</button>
+      <button>10</button>
+    </div>
+  </body>
+  <script>
+    let teams = document.querySelector(".teams");
+    let buttons = document.querySelectorAll(".pagination>button");
+    const getPlayers = async (page = 1, start, end) => {
+      console.log(start, end);
+      if (page && start && end) {
+        await fetch(
+          `https://www.balldontlie.io/api/v1/games?per_page=10&start_date=${start}&end_date=${end}&page=${page}`
+        )
+          .then((res) => res.json())
+          .then((res) => showData(res.data))
+          .catch((err) => console.log(err));
+      }
+    };
+
+    function showData(data) {
+      console.log(data);
+      teams.innerHTML = "";
+      data.forEach((item) => {
+        let div = document.createElement("div");
+        div.classList.add("match");
+
+        div.innerHTML = `
+
+        <div>
+          <img
+            src="https://static.vecteezy.com/system/resources/thumbnails/011/421/099/small/realistic-vector-basketball-isolated-png.png"
+          />
+          <h1> ${item.home_team.full_name}</h1>
+          <button>${
+            item.home_team_score > item.visitor_team_score ? "WON" : "LOST"
+          }</button>
+          <p>Date : ${item.date}</p>
+          <p>Season : ${item.season}</p>
+          <p>Status : ${item.status}</p>
+          <p>Home team score : ${item.home_team_score}</p>
+          <p>Division : ${item.home_team.division}</p>
+        </div>
+        <div>VS</div>
+        <div>
+          <img
+            src="https://static.vecteezy.com/system/resources/thumbnails/011/421/099/small/realistic-vector-basketball-isolated-png.png"
+          />
+          <h1>${item.visitor_team.full_name}</h1>
+          <button>${
+            item.home_team_score > item.visitor_team_score ? "LOST" : "WON"
+          }</button>
+          <p>Date : ${item.date}</p>
+          <p>Season : ${item.season}</p>
+          <p>Status : ${item.status}</p>
+          <p>Visitor team score : ${item.visitor_team_score}</p>
+          <p>Division  : ${item.visitor_team.division}</p>
+        </div>
+
+        `;
+
+        teams.appendChild(div);
+      });
+    }
+    let setDate1;
+    let setDate2;
+    let setPage;
+    function submit() {
+      let date1 = document.querySelector(".date1");
+      let date2 = document.querySelector(".date2");
+      setDate1 = date1.value;
+      setDate2 = date2.value;
+      if (date1.value && date2.value) {
+        getPlayers(setPage, date1.value, date2.value);
+      }
+    }
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener("click", () => {
+        setPage = buttons[i].innerText;
+        getPlayers(buttons[i].innerText, setDate1, setDate2);
+      });
+    }
+  </script>
+</html>

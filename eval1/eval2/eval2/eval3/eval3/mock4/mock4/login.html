@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <nav>
+      <a href="./">
+        <button>Home</button>
+      </a>
+    </nav>
+    Login to access admin panel
+    <div>
+      <form class="form">
+        <input type="email" class="email" />
+        <input type="password" class="pass" />
+        <input type="submit" value="Login" />
+      </form>
+    </div>
+  </body>
+  <script>
+    let token = localStorage.getItem("token");
+    if (token) {
+      window.location.href = "admin.html";
+    }
+    let form = document.querySelector("form");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      let email = document.querySelector(".email");
+      let password = document.querySelector(".pass");
+      let data = { email: email.value, password: password.value };
+      console.log(data);
+      login(data);
+    });
+    async function login(data) {
+      let res = await fetch("https://reqres.in/api/login", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      let details = await res.json();
+      let { token } = details;
+      if (!token) {
+        alert("Wrong Credentials");
+        return;
+      }
+      localStorage.setItem("token", token);
+      alert("Login successful");
+      window.location.href = "admin.html";
+    }
+  </script>
+</html>

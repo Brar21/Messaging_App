@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      tr > td > img {
+        width: 100px;
+      }
+      tr {
+        row-gap: 0;
+        column-gap: 0;
+      }
+      td {
+        border: 1px solid black;
+        padding: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav>
+      <a href="./">
+        <button>Home</button>
+      </a>
+      <a href="./admin.html">
+        <button>Admin</button>
+      </a>
+      <a href="./cart.html">
+        <button>Cart</button>
+      </a>
+    </nav>
+    <h1>Admin Section</h1>
+    <h2>Add books</h2>
+    <div>
+      <form class="form">
+        <input type="url" class="image" />
+        <input type="text" class="title" />
+        <input type="text" class="author" />
+        <input type="text" class="publisher" />
+        <select class="edition">
+          <option value="">Edition</option>
+          <option value="2020">2020</option>
+          <option value="2021">2021</option>
+          <option value="2022">2022</option>
+        </select>
+        <select class="genre">
+          <option value="">Genre</option>
+          <option value="science">Science</option>
+          <option value="history">History</option>
+          <option value="fiction">Fiction</option>
+          <option value="tech">Tech</option>
+          <option value="business">Business</option>
+        </select>
+        <input type="number" class="cost" />
+        <input type="submit" value="Add Book" />
+      </form>
+    </div>
+    <h2>All Books</h2>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Cover</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Edition</th>
+            <th>Publisher</th>
+            <th>Cost</th>
+            <th>Status</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody class="books">
+          <tr>
+            <th>Harry</th>
+            <th>1299</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+  <script>
+    let token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "login.html";
+    }
+
+    let form = document.querySelector("form");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      let data = {
+        image_url: document.querySelector(".image").value,
+        book_name: document.querySelector(".title").value,
+        author: document.querySelector(".author").value,
+        genre: document.querySelector(".genre").value,
+        edition: document.querySelector(".edition").value,
+        publisher: document.querySelector(".publisher").value,
+        cost: +document.querySelector(".cost").value,
+      };
+      addBook(data);
+      console.log(data);
+    });
+    async function addBook(data) {
+      let res = await fetch("https://lazy-ant-long-johns.cyclic.app/books", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      getBooks();
+    }
+    let table = document.querySelector(".books");
+    async function getBooks() {
+      await fetch("https://lazy-ant-long-johns.cyclic.app/books")
+        .then((res) => res.json())
+        .then((res) => showBooks(res))
+        .catch((err) => console.log(err));
+    }
+    getBooks();
+    console.log("called");
+    function showBooks(data) {
+      table.innerHTML = "";
+      data.forEach((item) => {
+        let div = document.createElement("tr");
+        let imgBox = document.createElement("td");
+        let img = document.createElement("img");
+        img.src = item.image_url;
+        imgBox.append(img);
+        let title = document.createElement("td");
+        title.innerText = item.book_name;
+        let author = document.createElement("td");
+        author.innerText = `${item.author}`;
+        let genre = document.createElement("td");
+        genre.innerText = `${item.genre}`;
+        let edition = document.createElement("td");
+        edition.innerText = `${item.edition}`;
+        let publisher = document.createElement("td");
+        publisher.innerText = `${item.publisher}`;
+        let cost = document.createElement("td");
+        cost.innerText = `${item.cost}`;
+        let status = document.createElement("td");
+        status.innerText = `${item.borrowed ? "borrowed" : "not burrowed"}`;
+        let edit = document.createElement("td");
+        edit.innerText = "edit";
+        let deleteBook = document.createElement("td");
+        deleteBook.innerText = "delete";
+        deleteBook.addEventListener("click", () => {
+          deleteItem(item.id);
+        });
+
+        div.append(
+          imgBox,
+          title,
+          author,
+          genre,
+          edition,
+          publisher,
+          cost,
+          status,
+          edit,
+          deleteBook
+        );
+        table.appendChild(div);
+      });
+    }
+    async function deleteItem(id) {
+      let res = await fetch(
+        `https://lazy-ant-long-johns.cyclic.app/books/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
+      getBooks();
+    }
+  </script>
+</html>
+
+<!-- https://mock4json.onrender.com -->

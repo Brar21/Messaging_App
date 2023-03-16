@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        position: relative;
+      }
+      .books {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        gap: 20px;
+        margin-top: 2rem;
+      }
+      .books > div {
+        width: 45%;
+        display: flex;
+        gap: 20px;
+        padding: 10px;
+        background-color: rgb(243, 243, 243);
+      }
+      .books > div > div img {
+        width: 200px;
+      }
+      .books > div > div > button {
+        background-color: #66b600;
+        padding: 10px;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+      }
+      .modal {
+        position: absolute;
+        width: 40%;
+        height: 35%;
+        top: 30%;
+        left: 30%;
+        padding: 1rem;
+        background-color: rgb(182, 221, 254);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .modal > div {
+        background-color: rgb(182, 221, 254);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        margin: auto;
+        gap: 20px;
+      }
+      .modal > div > div img {
+        width: 200px;
+      }
+      .modal > div > div button {
+        background-color: #66b600;
+        padding: 10px;
+        color: white;
+        font-weight: 600;
+        border: none;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+
+      .dn {
+        display: none;
+      }
+      .db {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="./">
+        <button>Home</button>
+      </a>
+      <a href="./admin.html">
+        <button>Admin</button>
+      </a>
+      <a href="./cart.html">
+        <button>Cart</button>
+      </a>
+    </nav>
+    <h1>User Section</h1>
+    <div>
+      <h3>Filter By Genre</h3>
+      <select class="filter" onchange="filter()">
+        <option value="">Filter</option>
+        <option value="science">Science</option>
+        <option value="history">History</option>
+        <option value="fiction">Fiction</option>
+        <option value="tech">Tech</option>
+        <option value="business">Business</option>
+      </select>
+      <h3>Sort by price</h3>
+      <select class="sort" onchange="sort()">
+        <option value="">sort</option>
+        <option value="desc">High to low</option>
+        <option value="asc">Low to high</option>
+      </select>
+    </div>
+    <div class="modal dn"></div>
+    <div class="books"></div>
+  </body>
+  <script>
+    let box = document.querySelector(".books");
+    let modal = document.querySelector(".modal");
+    async function getBooks(sort, filter) {
+      console.log(sort, filter);
+      let url = "https://lazy-ant-long-johns.cyclic.app/books";
+      if (sort && filter) {
+        url = `https://lazy-ant-long-johns.cyclic.app/books?genre=${filter}&_sort=cost&_order=${sort}`;
+      } else if (sort) {
+        url = `https://lazy-ant-long-johns.cyclic.app/books?_sort=cost&_order=${sort}`;
+      } else if (filter) {
+        url = `https://lazy-ant-long-johns.cyclic.app/books?genre=${filter}`;
+      }
+      await fetch(url)
+        .then((res) => res.json())
+        .then((res) => showBooks(res))
+        .catch((err) => console.log(err));
+    }
+    getBooks();
+    function showBooks(data) {
+      box.innerHTML = "";
+      data.forEach((item) => {
+        let div = document.createElement("div");
+        let imgBox = document.createElement("div");
+        let img = document.createElement("img");
+        img.src = item.image_url;
+        imgBox.append(img);
+        let detailBox = document.createElement("div");
+        let title = document.createElement("h2");
+        title.innerText = item.book_name;
+        let author = document.createElement("p");
+        author.innerText = `Author : ${item.author}`;
+        let genre = document.createElement("p");
+        genre.innerText = `genre : ${item.genre}`;
+        let edition = document.createElement("p");
+        edition.innerText = `edition : ${item.edition}`;
+        let publisher = document.createElement("p");
+        publisher.innerText = `publisher : ${item.publisher}`;
+        let cost = document.createElement("p");
+        cost.innerText = `cost : ${item.cost}`;
+        let borrow = document.createElement("button");
+        borrow.innerText = "Borrow";
+        borrow.addEventListener("click", () => {
+          popUp(item);
+        });
+        detailBox.append(
+          title,
+          author,
+          genre,
+          edition,
+          publisher,
+          cost,
+          borrow
+        );
+
+        div.append(imgBox, detailBox);
+        box.appendChild(div);
+      });
+    }
+    function popUp(item) {
+      modal.innerHTML = "";
+      let div = document.createElement("div");
+      let imgBox = document.createElement("div");
+      let img = document.createElement("img");
+      img.src = item.image_url;
+      imgBox.append(img);
+      let detailBox = document.createElement("div");
+      let title = document.createElement("h2");
+      title.innerText = item.book_name;
+      let author = document.createElement("p");
+      author.innerText = `Author : ${item.author}`;
+      let genre = document.createElement("p");
+      genre.innerText = `genre : ${item.genre}`;
+      let edition = document.createElement("p");
+      edition.innerText = `edition : ${item.edition}`;
+      let publisher = document.createElement("p");
+      publisher.innerText = `publisher : ${item.publisher}`;
+      let cost = document.createElement("p");
+      cost.innerText = `cost : ${item.cost}`;
+      let close = document.createElement("button");
+      close.innerText = "Close";
+      close.addEventListener("click", () => {
+        modal.classList.remove("db");
+      });
+      let confirm = document.createElement("button");
+      confirm.innerText = "Confirm";
+      confirm.addEventListener("click", () => {
+        burroBook(item);
+      });
+      detailBox.append(
+        title,
+        author,
+        genre,
+        edition,
+        publisher,
+        cost,
+        confirm,
+        close
+      );
+      div.append(imgBox, detailBox);
+      modal.classList.add("db");
+      modal.appendChild(div);
+    }
+
+    async function burroBook(item) {
+      console.log(item);
+      await fetch("https://lazy-ant-long-johns.cyclic.app/borrow", {
+        method: "POST",
+        body: JSON.stringify(item),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      await fetch(`https://lazy-ant-long-johns.cyclic.app/books/${item.id}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          borrowed: true,
+        }),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      modal.classList.remove("db");
+      alert("Book Borrowed");
+    }
+    let setFilter = "";
+    let setSort = "";
+    function filter() {
+      let filter = document.querySelector(".filter");
+      setFilter = filter.value;
+      console.log(filter.value);
+      getBooks(setSort, filter.value);
+    }
+    function sort() {
+      let sort = document.querySelector(".sort");
+      setSort = sort.value;
+      getBooks(sort.value, setFilter);
+    }
+  </script>
+</html>

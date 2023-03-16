@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      tr > td > img {
+        width: 100px;
+      }
+      tr {
+        row-gap: 0;
+        column-gap: 0;
+      }
+      td {
+        border: 1px solid black;
+        padding: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav>
+      <a href="./">
+        <button>Home</button>
+      </a>
+      <a href="./admin.html">
+        <button>Admin</button>
+      </a>
+      <a href="./cart.html">
+        <button>Cart</button>
+      </a>
+    </nav>
+    <h2>Borrowed books</h2>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Cover</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Edition</th>
+            <th>Publisher</th>
+            <th>Cost</th>
+          </tr>
+        </thead>
+        <tbody class="books"></tbody>
+      </table>
+    </div>
+  </body>
+  <script>
+    let table = document.querySelector(".books");
+    async function getBooks() {
+      await fetch("https://lazy-ant-long-johns.cyclic.app/borrow")
+        .then((res) => res.json())
+        .then((res) => showBooks(res))
+        .catch((err) => console.log(err));
+    }
+    getBooks();
+    function showBooks(data) {
+      table.innerHTML = "";
+      data.forEach((item) => {
+        let div = document.createElement("tr");
+        let imgBox = document.createElement("td");
+        let img = document.createElement("img");
+        img.src = item.image_url;
+        imgBox.append(img);
+        let title = document.createElement("td");
+        title.innerText = item.book_name;
+        let author = document.createElement("td");
+        author.innerText = `${item.author}`;
+        let genre = document.createElement("td");
+        genre.innerText = `${item.genre}`;
+        let edition = document.createElement("td");
+        edition.innerText = `${item.edition}`;
+        let publisher = document.createElement("td");
+        publisher.innerText = `${item.publisher}`;
+        let cost = document.createElement("td");
+        cost.innerText = `${item.cost}`;
+
+        div.append(imgBox, title, author, genre, edition, publisher, cost);
+        table.appendChild(div);
+      });
+    }
+  </script>
+</html>
