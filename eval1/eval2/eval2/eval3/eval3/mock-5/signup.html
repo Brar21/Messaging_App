@@ -1,0 +1,45 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="signup">
+        <input placeholder="enter username" type="text" id="username">
+        <input placeholder="enter email" type="email" id="email">
+        <input placeholder="enter password" type="password" id="password">
+        <input placeholder="enter avatar" type="text" id="avatar">
+        <input type="submit" value="SignUp">
+
+
+
+    </form>
+</body>
+<script>
+    let form = document.getElementById("signup");
+    form.addEventListener("submit", signup)
+    function signup() {
+        event.preventDefault();
+        let data = {
+            username: form.username.value,
+            email: form.email.value,
+            password: form.password.value,
+            avatar: form.avatar.value
+        }
+        console.log(data)
+        fetch(`https://mock-node-depolyment.onrender.com/users`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }).then((res) => res.json()).then((res) => (res) ? window.location.href = "./signin.html" : alert("signup again")).catch((err) => console.log(err))
+        // window.location.href="./signin.html"
+    }
+</script>
+
+</html>

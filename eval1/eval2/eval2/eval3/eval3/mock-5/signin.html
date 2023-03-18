@@ -1,0 +1,32 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="signin">
+        <input placeholder="enter email" type="email" id="email">
+        <input placeholder="enter password" type="password" id="password">
+        <input type="submit" value="SignIn">
+
+    </form>
+</body>
+<script>
+    let form = document.getElementById("signin");
+    form.addEventListener("submit", signin)
+    function signin() {
+        event.preventDefault()
+        let email = form.email.value
+        let password = form.password.value
+        fetch(`https://mock-node-depolyment.onrender.com/users?email=${email}&password=${password}`)
+            .then((res) => res.json()).then((res) => (res.length > 0 ? (localStorage.setItem("userdata", JSON.stringify(res)), console.log(res.length), alert("login successful"), window.location.href = "./blogs.html") : alert("login failed"))).catch((err) => console.log(err))
+    }
+
+
+</script>
+
+</html>

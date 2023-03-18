@@ -1,0 +1,59 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Number of blogs published</th>
+                <th>Total Likes received.</th>
+                <th>Total Comments received.</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</body>
+<script>
+    let data = JSON.parse(localStorage.getItem("data")) || [];
+    let count = 0;
+    function Append() {
+        document.querySelector("tbody").innerHTML = null;
+        data.forEach((el) => {
+            let tr = document.createElement("tr");
+            let username = document.createElement("td");
+            username.innerText = el.username;
+            let totalblog = document.createElement("td");
+            totalblog.innerText = data.length;
+            let likes = document.createElement("td");
+
+
+            likes.innerText = el.likes;
+            let comments = document.createElement("td");
+            comments.innerText = el.comments.length;
+
+
+
+
+
+            document.querySelector("tbody").append(tr);
+            tr.append(
+                username, totalblog, likes, comments
+
+
+            );
+        });
+    }
+    Append()
+</script>
+
+</html>

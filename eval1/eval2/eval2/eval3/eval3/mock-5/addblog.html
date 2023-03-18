@@ -1,0 +1,78 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="blog">
+        <input id="username" type="text">
+        <input id="title" placeholder="enter title" type="text">
+        <input id="content" placeholder="enter content" type="text">
+        <select id="category">
+            <option value="">select category</option>
+            <option value="Business">Business</option>
+            <option value="Tech">Tech</option>
+            <option value="Lifestyle">Lifestyle</option>
+            <option value="Entertainment">Entertainment</option>
+
+        </select>
+        <input id="date" type="date">
+        <button id="postblog">Post Blog</button>
+    </form>
+</body>
+<script>
+    let userdata = JSON.parse(localStorage.getItem("userdata")) || []
+    if (userdata.length === 0) {
+        alert("please login first")
+        window.location.href = "./signup.html"
+    } else {
+        let username = document.getElementById("username");
+        username.value = userdata[0].username;
+        username.disabled = true
+        document.getElementById("postblog").addEventListener("click", postblog)
+        function postblog() {
+            event.preventDefault();
+            let blog = document.getElementById("blog");
+            let blogdata = {
+                username: blog.username.value,
+                title: blog.title.value,
+                content: blog.content.value,
+                category: blog.category.value,
+                date: blog.date.value,
+                likes: 0,
+                comments: []
+            }
+            console.log(blogdata)
+
+            fetch(`https://mock-node-depolyment.onrender.com/blogs`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(blogdata)
+            }).then((res) => res.json()).then((res) => console.log(res))
+                .catch((err) => console.log(err))
+        }
+
+    }
+</script>
+
+</html>
+<!-- - Username (should be automatically fetched from the signed in user data, should not be able to modify this field)
+- Title
+- Content (Should be a textarea input field)
+- Category (Should be a **select tag** with “Business”, “Tech”, “Lifestyle”, and “Entertainment” as options).
+- Date (Should be a **date** input field)
+- Post Blog button. -->
+
+<!-- "username": "coreyschafer",
+    "title": "Be Present",
+    "content": "Turning away from the ledge, he started slowly down the mountain, deciding that he would, that very night, satisfy his curiosity about the man-house. In the meantime, he would go down into the canyon and get a cool drink, after which he would visit some berry patches just over the ridge, and explore among the foothills a bit before his nap-time, which always came just after the sun had walked past the middle of the sky. At that period of the day the sun’s warm rays seemed to cast a sleepy spell over the silent mountainside, so all of the animals, with one accord, had decided it should be the hour for their mid-day sleep.",
+		"category" : "Entertainment",
+		"date" : "2017-06-01",
+		"likes" : 24,
+		"comments" -->

@@ -1,0 +1,383 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .editmodal {
+        display: none;
+
+        position: fixed;
+
+        z-index: 1;
+
+        left: 0;
+        top: 0;
+        width: 100%;
+
+        height: 100%;
+
+        overflow: auto;
+
+        background-color: rgb(0, 0, 0);
+
+        background-color: rgba(0, 0, 0, 0.4);
+
+    }
+
+    .comment {
+        display: none;
+
+        position: fixed;
+
+        z-index: 1;
+
+        left: 0;
+        top: 0;
+        width: 100%;
+
+        height: 100%;
+
+        overflow: auto;
+
+        background-color: rgb(0, 0, 0);
+
+        background-color: rgba(0, 0, 0, 0.4);
+
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+
+    }
+
+
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .closed {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .closed:hover,
+    .closed:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+    <a href="./addblog.html"> <button>create blog</button></a>
+    <input type="text" placeholder="search blogs..." id="query">
+    <button id="search">search</button>
+    <select id="filter">
+        <option value="">filter</option>
+        <option value="Business">Business</option>
+        <option value="Tech">Tech</option>
+        <option value="Lifestyle">Lifestyle</option>
+        <option value="Entertainment">Entertainment</option>
+    </select>
+    <select id="sorting">
+        <option value="">sorting</option>
+        <option value="Low to High">Low to High</option>
+        <option value="High to Low">High to Low</option>
+
+
+    </select>
+    <div id="blogs">
+
+    </div>
+    <div id="myModal" class="editmodal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form id="blog">
+                <input id="username" type="text">
+                <input id="title" placeholder="enter title" type="text">
+                <input id="content" placeholder="enter content" type="text">
+                <select id="category">
+                    <option value="">select category</option>
+                    <option value="Business">Business</option>
+                    <option value="Tech">Tech</option>
+                    <option value="Lifestyle">Lifestyle</option>
+                    <option value="Entertainment">Entertainment</option>
+
+                </select>
+                <input id="date" type="date">
+                <button id="updateblog">Update Blog</button>
+            </form>
+
+        </div>
+
+    </div>
+    <div id="modal" class="comment">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="closed">&times;</span>
+            <form id="addcomment">
+
+
+                <input id="commentcontent" placeholder="enter content" type="text">
+
+
+                <button id="sendcomment">Send comment</button>
+            </form>
+
+        </div>
+
+    </div>
+    <button id="prev">prev</button>
+    <button id="next">next</button>
+</body>
+<script>
+    let page = localStorage.getItem("page") || 1;
+    let userdata = JSON.parse(localStorage.getItem("userdata")) || []
+    let url = `https://mock-node-depolyment.onrender.com/blogs`;
+    if (userdata.length === 0) {
+        alert("please login first")
+        window.location.href = "./signup.html"
+    }
+    else {
+        let modal = document.getElementById("myModal");
+        let comment = document.getElementById("modal");
+
+
+        let span = document.getElementsByClassName("close")[0];
+        async function GetData(page = 1, q) {
+            if (q === "") {
+                let res = await fetch(`${url}?_limit=4&_page=${page}`)
+                let data = await res.json();
+                localStorage.setItem("data", JSON.stringify(data))
+
+                return data
+            }
+            else {
+                let res = await fetch(`${url}?_limit=4&_page=${page}&title=${q}`)
+                let data = await res.json();
+
+                return data
+            }
+        }
+        GetData(page, "").then((res) => Appendblogs(res))
+        function Appendblogs(data) {
+            let blog = document.getElementById("blogs");
+            blog.innerHTML = null
+            data.forEach((el) => {
+                let div = document.createElement("div");
+                let img = document.createElement("img");
+                img.setAttribute("src", userdata[0].avatar)
+                let edit = document.createElement("button");
+                edit.innerText = "Edit";
+                edit.addEventListener("click", () => {
+                    modal.style.display = "block";
+
+                    updated(el.id, el)
+                })
+                let delt = document.createElement("button");
+                delt.innerText = "Delete"
+                delt.addEventListener("click", () => {
+                    deleted(el.id)
+                })
+                let username = document.createElement("h4");
+                username.innerText = el.username
+                let category = document.createElement("p");
+                category.innerText = el.category
+                let data = document.createElement("p");
+                data.innerText = el.date;
+                let title = document.createElement("h2");
+                title.innerText = el.title;
+                let content = document.createElement("p");
+                content.innerText = el.content
+                let likes = document.createElement("button")
+                likes.innerText = `likes (${el.likes})`
+
+                likes.addEventListener("click", () => {
+                    liked(el, el.id)
+                })
+                let commentdiv = document.createElement("div");
+                let addcomment = document.createElement("button");
+                addcomment.innerText = "Add Comment"
+                addcomment.addEventListener("click", () => {
+                    comment.style.display = "block";
+                    commented(el.id, el)
+                })
+                el.comments.forEach((x) => {
+                    let commentdivv = document.createElement("div");
+                    let cc = document.createElement("p");
+                    cc.innerText = x.content;
+                    let cusername = document.createElement("h5")
+                    cusername.innerText = x.username
+                    commentdivv.append(cusername, cc)
+                    commentdiv.append(commentdivv)
+                })
+                blog.append(div)
+                div.append(img, edit, delt, username, category, data, title, content, likes, addcomment, commentdiv)
+
+            })
+        }
+        document.getElementById("search").addEventListener("click", search)
+        function search() {
+            let q = document.getElementById("query").value;
+            
+            GetData(page, q).then((res) => Appendblogs(res))
+        }
+        function deleted(id) {
+            fetch(`${url}/${id}`, {
+                method: "Delete",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then((res) => res.json()).then((res) => GetData(page, "").then((res) => Appendblogs(res)))
+                .catch((err) => console.log(err))
+        }
+        span.onclick = function () {
+            modal.style.display = "none";
+
+
+        }
+        document.getElementsByClassName("closed")[0].onclick = function () {
+
+
+            comment.style.display = "none";
+        }
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                comment.style.display = "none";
+
+            }
+        }
+        window.onclick = function (event) {
+            if (event.target == comment) {
+
+
+                comment.style.display = "none";
+
+            }
+        }
+        function updated(id, el) {
+            let username = document.getElementById("username");
+            username.value = userdata[0].username;
+            username.disabled = true
+            document.getElementById("updateblog").addEventListener("click", updateall)
+            function updateall() {
+                event.preventDefault();
+                let blog = document.getElementById("blog");
+
+                let blogdata = {
+                    username: blog.username.value,
+                    title: blog.title.value,
+                    content: blog.content.value,
+                    category: blog.category.value,
+                    date: blog.date.value,
+                    likes: 0,
+                    comments: []
+                }
+                console.log(blogdata)
+                fetch(`${url}/${id}`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(blogdata)
+                }).then((res) => res.json()).then((res) => (GetData(page, "").then((res) => Appendblogs(res))))
+            }
+        }
+        function liked(el, id) {
+            fetch(`${url}/${id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ ...el, likes: el.likes + 1 })
+            }).then((res) => res.json()).then((res) => (GetData(page, "").then((res) => Appendblogs(res))))
+        }
+        function commented(id, el) {
+            document.getElementById("sendcomment").addEventListener("click", sendcomment)
+
+            function sendcomment() {
+                event.preventDefault()
+                let x = document.getElementById("commentcontent").value;
+                let y = ([...el.comments, { username: userdata[0].username, content: x }])
+                console.log(x)
+                fetch(`${url}/${id}`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ ...el, comments: y })
+                }).then((res) => res.json()).then((res) => (GetData(page, "").then((res) => Appendblogs(res))))
+            }
+        }
+        document.getElementById("prev").addEventListener("click", () => {
+
+
+            pagination(Number(page) - 1)
+
+
+        })
+        document.getElementById("next").addEventListener("click", () => {
+            pagination(Number(page) + 1)
+        })
+        function pagination(p) {
+            localStorage.setItem("page", p)
+            GetData(p, "").then((res) => Appendblogs(res))
+        }
+        document.getElementById("filter").addEventListener("change", filtering)
+        function filtering() {
+            let filter = document.getElementById("filter").value;
+            if (filter === "") {
+                GetData(page, "").then(res => Appendblogs(res))
+
+            } else {
+                GetData(page, "").then(res => (Appendblogs(res.filter(el => el.category === filter)), localStorage.setItem("filter", JSON.stringify(res.filter(el => el.category === filter)))))
+            }
+        }
+        let sort = document.getElementById("sorting")
+        sort.addEventListener("change", sorting)
+        function sorting() {
+            if (sort.value === "Low to High") {
+                GetData(page, "").then(res => Appendblogs(res.sort((a, b) => Number(a.date) - Number(b.date))))
+
+            }
+            else if (sort.value === "High to Low") {
+                GetData(page, "").then(res => Appendblogs(res.sort((a, b) => Number(b.date) - Number(a.date))))
+
+            } else {
+                GetData(url).then(res => Appendblogs(res))
+
+            }
+        }
+    }
+
+
+
+</script>
+
+</html>
